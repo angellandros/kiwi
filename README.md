@@ -1,5 +1,5 @@
 # Fullstack Developer Job Application Assignment
-![build](https://travis-ci.org/angellandros/kiwi.svg?branch=master)
+[![build](https://travis-ci.org/angellandros/kiwi.svg?branch=master)](https://travis-ci.org/angellandros/kiwi)
 
 Our servers receive health reports from different types of devices. Our backend generates a report based on pre-defined formula of device and status.
 
