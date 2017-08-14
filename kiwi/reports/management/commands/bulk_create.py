@@ -25,6 +25,8 @@ class Command(BaseCommand):
             device_id = split_line[1]
             if device_id not in devices:
                 devices.append(device_id)
+        del split_line
+        del device_id
         # log, for keeping the track of data loss
         self.stdout.write(self.style.SUCCESS('Successfully loaded %d records' % len(raw_data)))
 
@@ -46,10 +48,10 @@ class Command(BaseCommand):
                 created_num += 1
             try:
                 data.append(Datum(
-                    time=datetime.strptime(split_line[0], '%Y-%m-%dT%H:%M:%SZ'),
+                    time=datetime.strptime(raw_datum[0], '%Y-%m-%dT%H:%M:%SZ'),
                     device=device,
-                    type=1 if split_line[2] == 'sensor' else 2,
-                    status=1 if split_line[3] == 'offline' else 2,
+                    type=1 if raw_datum[2] == 'sensor' else 2,
+                    status=1 if 'offline' in raw_datum[3] else 2,
                 ))
             except ValueError:
                 self.stdout.write('Invalid timestamp format: %s' % split_line[0])

@@ -1,0 +1,5 @@
+timestamp,id,type,status
+2017-05-01T00:00:10Z,a4a281ad,sensor,offline
+2017-05-01T00:05:30Z,f5d9c9f2,sensor,offline
+2017-05-01T00:11:20Z,bb6dee36,gateway,online
+2017-05-01T00:17:50Z,a4a281ad,sensor,online

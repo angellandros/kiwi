@@ -10,6 +10,6 @@ install:
 script:
   - cd kiwi
   - python manage.py migrate
-  - python manage.py bulk_create ../report.csv
   - python manage.py test
+  - python manage.py bulk_create ../report.csv
 
