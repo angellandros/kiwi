@@ -20,7 +20,7 @@ def view1(request, year, month, day):
             .filter(time__date=date)
             .filter(device=OuterRef('pk')).only('pk')
         ))).order_by('count')[:10]
-    output = []
+    output = {}
     for i in range(len(top_ten)):
         device = top_ten[i]
         count = Datum.objects.filter(time__date=date).filter(device=device).count()
@@ -31,7 +31,7 @@ def view1(request, year, month, day):
             'count_last_week': count_last_week,
             'change': None if count_last_week == 0 else float(count) / count_last_week - 1.0
         }
-        output.append(device_stats)
+        output[i] = device_stats
     return JsonResponse(output)
 
 
