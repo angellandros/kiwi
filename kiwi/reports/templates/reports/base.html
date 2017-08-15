@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <title>{% block title %}Reports{% endblock %}</title>
+    <style type="text/css">
+        html {
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        table, th {
+            border: 2px solid black;
+        }
+
+        tbody tr:nth-child(even) {
+            background: lavender;
+        }
+
+        td {
+            padding-left: 10pt;
+            padding-right: 10pt;
+        }
+    </style>
+</head>
+<body>
+    {% block contents %}{% endblock %}
+</body>
+</html>

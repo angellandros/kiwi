@@ -32,7 +32,17 @@ def view1(request, year, month, day):
             'change': None if count_last_week == 0 else float(count) / count_last_week - 1.0
         }
         output[i] = device_stats
-    return JsonResponse(output)
+    return output
+
+
+def view1_json(request, year, month, day):
+    return JsonResponse(view1(request, year, month, day))
+
+
+def view1_html(request, year, month, day):
+    devices = view1(request, year, month, day)
+    context = [v for k, v in devices.items()]
+    return render(request, 'reports/view1.html', {'devices': context})
 
 
 def view2(request, device_id):
