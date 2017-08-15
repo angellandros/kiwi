@@ -13,7 +13,7 @@ def index(request):
 
 
 def view1(request, year, month, day):
-    date = dt.date(year, month, day)
+    date = dt.date(int(year), int(month), int(day))
     date_last_week = date - timedelta(days=7)
     top_ten = Device.objects.annotate(count=Count(Subquery(
             Datum.objects
