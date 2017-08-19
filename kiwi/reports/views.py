@@ -75,3 +75,13 @@ def view2_html(request, type, status):
         'status': status,
     }
     return render(request, 'reports/view2.html', context)
+
+
+def index(request):
+    first = Datum.objects.order_by('time')[0].time.date().isoformat()
+    latest = Datum.objects.latest('time').time.date().isoformat()
+    context = {
+        'first': first,
+        'latest': latest,
+    }
+    return render(request, 'reports/index.html', context)
