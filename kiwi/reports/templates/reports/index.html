@@ -1,0 +1,25 @@
+{% extends "reports/base.html" %}
+
+{% block title %}Index{% endblock %}
+{% block contents %}
+    <h3>View 1</h3>
+    Choose a day to see the stats:<br>
+    <input type="date" name="date" id="date" min="{{ first }}" max="{{ latest }}" onchange="goToDate()"><br>
+    <!--<input type="submit" name="Submit" id="submit" onclick="goToDate()">-->
+
+    <h3>View 2</h3>
+    Choose a combination of device conditions to see the stats:
+    <list>
+        <li><a href="/reports/devices/sensor/offline/">sensor offline</a></li>
+        <li><a href="/reports/devices/sensor/online/">sensor online</a></li>
+        <li><a href="/reports/devices/gateway/offline/">gateway offline</a></li>
+        <li><a href="/reports/devices/gateway/online/">gateway online</a></li>
+    </list>
+
+    <script>
+        function goToDate() {
+            var day = document.getElementById('date').value.split('-');
+            window.location.href = '/reports/day/' + day[0] + '/' + day[1] + '/' + day[2] + '/';
+        }
+    </script>
+{% endblock %}
