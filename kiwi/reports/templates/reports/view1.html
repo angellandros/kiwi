@@ -3,13 +3,14 @@
 {% block title %}View 1{% endblock %}
 {% block contents %}
     <table id="top-ten">
-        <tr><th>ID</th><th>Count</th><th>Count<br>-7 days</th><th>Change</th></tr>
-        {% for device in devices %}
+        <tr><th>No.</th><th>ID</th><th>Count</th><th>Count<br>-7 days</th><th>Change</th></tr>
+        {% for key, device in devices.items %}
         <tr>
+            <td>{{ key|add:"1" }}</td>
             <td>{{ device.id }}</td>
             <td>{{ device.count }}</td>
             <td>{{ device.count_last_week }}</td>
-            <td>{{ device.change }}</td>
+            <td>{{ device.change }}%</td>
         </tr>
         {% endfor %}
     </table>
@@ -24,9 +25,9 @@
             rows = table.getElementsByTagName("TR");
             for (i = 1; i < (rows.length - 1); i++) {
               shouldSwitch = false;
-              x = rows[i].getElementsByTagName("TD")[1];
-              y = rows[i + 1].getElementsByTagName("TD")[1];
-              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              x = rows[i].getElementsByTagName("TD")[0];
+              y = rows[i + 1].getElementsByTagName("TD")[0];
+              if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
                 shouldSwitch= true;
                 break;
               }
