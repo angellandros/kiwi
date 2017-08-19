@@ -1,0 +1,43 @@
+{% extends "reports/base.html" %}
+
+{% block title %}View 2{% endblock %}
+{% block contents %}
+    <p>Number of reports from <b>{{ status }} {{ type }} devices</b> in the last 30 days of reporting</p>
+    <table id="top-ten">
+        <tr><th>No. of<br>days prior</th><th>Date</th><th>Count</th></tr>
+        {% for key, number in numbers.items %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ number.date }}</td>
+            <td>{{ number.count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        function sortTable() {
+          var table, rows, switching, i, x, y, shouldSwitch;
+          table = document.getElementById("top-ten");
+          switching = true;
+          while (switching) {
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+            for (i = 1; i < (rows.length - 1); i++) {
+              shouldSwitch = false;
+              x = rows[i].getElementsByTagName("TD")[0];
+              y = rows[i + 1].getElementsByTagName("TD")[0];
+              if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+                shouldSwitch= true;
+                break;
+              }
+            }
+            if (shouldSwitch) {
+              rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+              switching = true;
+            }
+          }
+        }
+
+        sortTable();
+    </script>
+{% endblock %}

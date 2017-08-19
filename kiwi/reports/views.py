@@ -2,6 +2,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 
 from django.db.models import OuterRef, Subquery, Count, Sum, IntegerField
+from django.db.models.functions import TruncDate
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
@@ -46,10 +47,31 @@ def view1_html(request, year, month, day):
     devices = view1(request, year, month, day)
     context = {
         'devices': devices,
-        'range': [str(i) for i in range(10)],
     }
     return render(request, 'reports/view1.html', context)
 
 
-def view2(request, device_id):
-    return HttpResponse('View 2: %s' % device_id)
+def view2_html(request, type, status):
+    dated = (
+        Datum.objects
+        .filter(
+            type=1 if type == 'sensor' else 2,
+            status=1 if status == 'offline' else 2
+        )
+        .annotate(date=TruncDate('time'))
+        .values('date')
+        .annotate(count=Count('*'))
+    )
+    last_day = dated.latest('date')['date']
+    queryset = dated.filter(date__gte=last_day - timedelta(days=30))
+    numbers = {}
+    for i in range(30):
+        result = queryset.filter(date=last_day - timedelta(days=i))
+        if result.count() != 0:
+            numbers[i] = result[0]
+    context = {
+        'numbers': numbers,
+        'type': type,
+        'status': status,
+    }
+    return render(request, 'reports/view2.html', context)
